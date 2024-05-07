@@ -101,7 +101,11 @@ ul {
 
 .heart-icon {
   width: 1em;
-  margin-right: 1rem;
+}
+
+.disabled-button {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .image-single-article > a {
@@ -143,4 +147,17 @@ ul {
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: rgb(233, 250, 255);
+}
+
+.article-votes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.article-votes-author {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }

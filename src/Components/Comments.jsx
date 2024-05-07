@@ -22,7 +22,11 @@ const Comments = ({ article_id }) => {
 
   return (
     <div className="comments-wrapper">
-      <h3>comments:</h3>
+      <h3>
+        {commentsList.length === 0
+          ? `no comments have been posted yet. `
+          : `comments:`}
+      </h3>
       {commentsList.map((comment) => {
         return (
           <>
