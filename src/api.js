@@ -57,4 +57,31 @@ const patchVotesById = (article_id, inc_votes) => {
   }
 };
 
-export { getArticles, getArticleById, getCommentByArticleById, patchVotesById };
+const postComment = (article_id, body) => {
+  const comment = {
+    body: body,
+    username: "grumpy19",
+  };
+  if (article_id) {
+    return axios
+      .post(
+        `https://nc-news-project-lymg.onrender.com/articles/${article_id}/comments`,
+        comment
+      )
+      .then(({ data }) => {
+        console.log(data.comment);
+        return data.comment;
+      })
+      .catch((error) => {
+        return error.message;
+      });
+  }
+};
+
+export {
+  getArticles,
+  getArticleById,
+  getCommentByArticleById,
+  patchVotesById,
+  postComment,
+};
