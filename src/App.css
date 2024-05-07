@@ -51,9 +51,10 @@ ul {
 }
 
 .img-article-list {
-  margin: 1em;
-  min-width: 10em;
-  max-width: 100%;
+  padding: 0.5rem;
+  height: auto;
+  min-width: 10rem;
+  max-width: 30%;
   border-radius: 2%;
 }
 
@@ -92,7 +93,7 @@ ul {
   text-align: center;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   width: 100%;
@@ -101,4 +102,45 @@ ul {
 .heart-icon {
   width: 1em;
   margin-right: 1rem;
+}
+
+.image-single-article > a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+}
+
+.article-image {
+  width: 100%;
+  height: auto;
+}
+
+.comments-wrapper > h3 {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.comments-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: auto;
+  padding-top: 5px;
+  font-size: 0.7em;
+}
+
+.comments-list-wrapper > p {
+  background-color: rgb(247, 247, 247);
+  padding: 10px;
+  text-align: left;
+}
+
+.comments-list-wrapper > section {
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: rgb(233, 250, 255);
 }
