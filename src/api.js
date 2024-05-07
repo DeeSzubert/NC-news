@@ -39,4 +39,22 @@ const getCommentByArticleById = (article_id) => {
   }
 };
 
-export { getArticles, getArticleById, getCommentByArticleById };
+const patchVotesById = (article_id, inc_votes) => {
+  console.log(inc_votes);
+  if (article_id) {
+    return axios
+      .patch(
+        `https://nc-news-project-lymg.onrender.com/articles/${article_id}`,
+        { inc_votes }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        return data;
+      })
+      .catch((error) => {
+        return error.message;
+      });
+  }
+};
+
+export { getArticles, getArticleById, getCommentByArticleById, patchVotesById };

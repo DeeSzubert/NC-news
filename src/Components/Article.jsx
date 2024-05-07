@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { getArticleById } from "../api";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Comments from "./Comments";
 import "../App.css";
+import Votes from "./Votes";
 
 const Article = () => {
   const [article, setArticle] = useState({});
+  const [votes, setVotes] = useState(0);
   const { article_id } = useParams();
 
   useEffect(() => {
@@ -22,8 +24,13 @@ const Article = () => {
       <div>
         <h3>{article.title}</h3>
         <p>{article.body}</p>
-        <p>{article.votes}</p>
-        <p>{article.author}</p>
+        <section className="article-votes-author">
+          {" "}
+          <div>
+            <Votes votes={votes} setVotes={setVotes} />
+          </div>
+          <p>written by: {article.author}</p>
+        </section>
       </div>
       <section>
         <Comments article_id={article_id} />
