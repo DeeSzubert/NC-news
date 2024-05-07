@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getArticles } from "../api";
 import "../App.css";
+import { Link } from "react-router-dom";
 
 const AllArticles = () => {
   const [articles, setArticles] = useState([]);
@@ -25,7 +26,9 @@ const AllArticles = () => {
       {articles.map((article) => {
         return (
           <li key={article.article_id} className="list-article-container">
-            <img className="img-article-list" src={article.article_img_url} />
+            <Link to={`/allArticles/${article.article_id}`}>
+              <img className="img-article-list" src={article.article_img_url} />
+            </Link>
             <div className="article-list-header">
               <h3>{article.title}</h3>
               <p>{article.body}</p>
