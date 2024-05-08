@@ -7,6 +7,7 @@ const AllArticles = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { topic } = useParams();
+  const [sortBy, setSortBy] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +39,28 @@ const AllArticles = () => {
     );
   };
 
+  const handleSortChange = (e) => {
+    const sortKey = e.target.value;
+    setSortBy(sortKey);
+    const sortedArticles = [...articles];
+
+    if (sortKey === "byDate") {
+      sortedArticles.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+    } else if (sortKey === "commentCount") {
+      sortedArticles.sort((a, b) => b.comment_count - a.comment_count);
+    } else if (sortKey === "votes") {
+      sortedArticles.sort((a, b) => b.votes - a.votes);
+    } else if (sortKey === "ASC") {
+      sortedArticles.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortKey === "DESC") {
+      sortedArticles.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    setArticles(sortedArticles);
+  };
+
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -54,6 +77,22 @@ const AllArticles = () => {
           <option value="coding">coding</option>
           <option value="football">football</option>
           <option value="cooking">cooking</option>
+        </select>
+      </div>
+      <div>
+        <label htmlFor="topics">sort articles</label>
+        <select
+          name="topics"
+          id="topics"
+          onChange={handleSortChange}
+          value={sortBy || ""}
+        >
+          <option value="">Sort</option>
+          <option value="byDate">by date</option>
+          <option value="commentCount">by comment count</option>
+          <option value="votes">by votes</option>
+          <option value="ASC">ascending</option>
+          <option value="DESC">descending</option>
         </select>
       </div>
       <div>
