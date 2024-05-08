@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getCommentByArticleById, postComment } from "../api";
+import {
+  getCommentByArticleById,
+  postComment,
+  deleteCommentByID,
+} from "../api";
 import "../App.css";
 
 const Comments = ({ article_id }) => {
@@ -7,6 +11,8 @@ const Comments = ({ article_id }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [newComment, setNewComment] = useState("");
   const [isPosting, setIsPosting] = useState(false);
+  const [isCommentDeleted, setIsCommentDeleted] = useState(false);
+  const username = "grumpy19";
 
   useEffect(() => {
     getCommentByArticleById(article_id).then((comments) => {
@@ -26,7 +32,7 @@ const Comments = ({ article_id }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsPosting(true);
-    setisDisabled(true);
+
     postComment(article_id, newComment)
       .then((postedComment) => {
         if (postedComment) {
@@ -41,6 +47,20 @@ const Comments = ({ article_id }) => {
       .catch((error) => {});
   };
 
+  const handleRemove = (comment_id) => {
+    deleteCommentByID(comment_id)
+      .then(() => {
+        const updatedComments = commentsList.filter(
+          (comment) => comment.comment_id !== comment_id
+        );
+        setIsCommentDeleted(true);
+        setCommentsList(updatedComments);
+      })
+      .catch((error) => {
+        console.error("Failed to delete comment:", error);
+      });
+  };
+
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -49,9 +69,9 @@ const Comments = ({ article_id }) => {
         <label htmlFor="add-comment">Add Comment</label>
         <textarea
           onChange={handleOnChange}
+          value={newComment}
           type="text"
           name=""
-          id="add-comment"
           placeholder="add your comment"
           rows="4"
           cols="50"
@@ -60,12 +80,14 @@ const Comments = ({ article_id }) => {
         <button type="submit">send your comment</button>
       </form>
       <p>{isPosting ? `Comment is posting...be patient` : ""}</p>
+      <p>{isCommentDeleted ? `Comment Was deleted` : ""}</p>
       <h3>
         {commentsList.length === 0
           ? `no comments have been posted yet. `
           : `comments:`}
       </h3>
       {commentsList.map((comment) => {
+        console.log(comment);
         return (
           <div key={comment.comment_id} className="comments-list-wrapper">
             <p>{comment.body}</p>
@@ -73,6 +95,13 @@ const Comments = ({ article_id }) => {
             <section>
               <p>votes: {comment.votes}</p>
               <p>commented by: {comment.author}</p>
+              {comment.author === username ? (
+                <button onClick={() => handleRemove(comment.comment_id)}>
+                  X delete comment
+                </button>
+              ) : (
+                ""
+              )}
             </section>
           </div>
         );

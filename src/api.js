@@ -78,10 +78,27 @@ const postComment = (article_id, body) => {
   }
 };
 
+const deleteCommentByID = (comment_id) => {
+  if (comment_id) {
+    return axios
+      .delete(
+        `https://nc-news-project-lymg.onrender.com/comments/${comment_id}`,
+        comment_id
+      )
+      .then((response) => {
+        console.log(`Deleted post with ID ${comment_id}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+};
+
 export {
   getArticles,
   getArticleById,
   getCommentByArticleById,
   patchVotesById,
   postComment,
+  deleteCommentByID,
 };
