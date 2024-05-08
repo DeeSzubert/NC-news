@@ -57,4 +57,48 @@ const patchVotesById = (article_id, inc_votes) => {
   }
 };
 
-export { getArticles, getArticleById, getCommentByArticleById, patchVotesById };
+const postComment = (article_id, body) => {
+  const comment = {
+    body: body,
+    username: "grumpy19",
+  };
+  if (article_id) {
+    return axios
+      .post(
+        `https://nc-news-project-lymg.onrender.com/articles/${article_id}/comments`,
+        comment
+      )
+      .then(({ data }) => {
+        console.log(data.comment);
+        return data.comment;
+      })
+      .catch((error) => {
+        return error.message;
+      });
+  }
+};
+
+const deleteCommentByID = (comment_id) => {
+  if (comment_id) {
+    return axios
+      .delete(
+        `https://nc-news-project-lymg.onrender.com/comments/${comment_id}`,
+        comment_id
+      )
+      .then((response) => {
+        console.log(`Deleted post with ID ${comment_id}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+};
+
+export {
+  getArticles,
+  getArticleById,
+  getCommentByArticleById,
+  patchVotesById,
+  postComment,
+  deleteCommentByID,
+};
