@@ -94,6 +94,21 @@ const deleteCommentByID = (comment_id) => {
   }
 };
 
+const getArticleByTopic = (topic) => {
+  if (topic) {
+    return axios
+      .get(`https://nc-news-project-lymg.onrender.com/api/articles`, {
+        params: { topic },
+      })
+      .then(({ data }) => data.articles || [])
+      .catch((error) => {
+        console.error(`Error fetching articles by topic: ${error.message}`);
+        return [];
+      });
+  }
+  return Promise.resolve([]);
+};
+
 export {
   getArticles,
   getArticleById,
@@ -101,4 +116,5 @@ export {
   patchVotesById,
   postComment,
   deleteCommentByID,
+  getArticleByTopic,
 };

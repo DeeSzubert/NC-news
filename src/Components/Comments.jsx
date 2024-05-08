@@ -12,6 +12,8 @@ const Comments = ({ article_id }) => {
   const [newComment, setNewComment] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const [isCommentDeleted, setIsCommentDeleted] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
+  const [offlineDeletedComments, setOfflineDeletedComments] = useState([]);
   const username = "grumpy19";
 
   useEffect(() => {
@@ -48,16 +50,18 @@ const Comments = ({ article_id }) => {
   };
 
   const handleRemove = (comment_id) => {
+    setDeleteError("");
+    setIsCommentDeleted(false);
     deleteCommentByID(comment_id)
       .then(() => {
-        const updatedComments = commentsList.filter(
-          (comment) => comment.comment_id !== comment_id
+        setCommentsList((prevComments) =>
+          prevComments.filter((comment) => comment.comment_id !== comment_id)
         );
         setIsCommentDeleted(true);
-        setCommentsList(updatedComments);
       })
       .catch((error) => {
         console.error("Failed to delete comment:", error);
+        setDeleteError("Something went wrong. Couldn't delete the comment.");
       });
   };
 

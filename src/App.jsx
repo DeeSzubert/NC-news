@@ -14,6 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Header />} exact></Route>
       <Route path="/allArticles" element={<AllArticles />}></Route>
+      <Route path="/allArticles/topics/:topic" element={<AllArticles />} />
       <Route path="/allArticles/:article_id" element={<Article />}></Route>
       <Route
         path="/allArticles/:article_id/comments"
