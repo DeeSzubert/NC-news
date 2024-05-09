@@ -4,13 +4,13 @@ NC-News is a web application where users can read, comment on articles, and expl
 
 Features:
 
-- Read Articles
+- Read Articles:
   Browse through a wide range of articles across different topics.
 
-- Comment on Articles
+- Comment on Articles:
   Engage with the community by leaving comments on your favorite articles.
 
-- Topic-Based Filtering
+- Topic-Based Filtering:
   Find articles by filtering based on specific topics.
 
 ## Technologies
