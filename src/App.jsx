@@ -6,6 +6,7 @@ import AllArticles from "./Components/AllArticles";
 import Article from "./Components/Article";
 import Comments from "./Components/Comments";
 import Votes from "./Components/Votes";
+import ErrorPage from "./Components/ErrorPage";
 
 import "./App.css";
 
@@ -21,6 +22,7 @@ function App() {
         element={<Comments />}
       ></Route>
       <Route path="/Votes" element={<Votes />}></Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }

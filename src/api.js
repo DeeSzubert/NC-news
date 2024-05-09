@@ -19,7 +19,9 @@ const getArticleById = (article_id) => {
         return data.article;
       })
       .catch((error) => {
-        return error.message;
+        const errorMessage = error.response.data.message;
+
+        throw new Error(errorMessage);
       });
   }
 };
@@ -31,10 +33,11 @@ const getCommentByArticleById = (article_id) => {
         `https://nc-news-project-lymg.onrender.com/articles/${article_id}/comments`
       )
       .then(({ data }) => {
+        console.log(data);
         return data.comments;
       })
       .catch((error) => {
-        return error.message;
+        throw new Error(errorMessage);
       });
   }
 };
@@ -71,9 +74,6 @@ const postComment = (article_id, body) => {
       .then(({ data }) => {
         console.log(data.comment);
         return data.comment;
-      })
-      .catch((error) => {
-        return error.message;
       });
   }
 };
@@ -100,11 +100,7 @@ const getArticleByTopic = (topic) => {
       .get(`https://nc-news-project-lymg.onrender.com/api/articles`, {
         params: { topic },
       })
-      .then(({ data }) => data.articles || [])
-      .catch((error) => {
-        console.error(`Error fetching articles by topic: ${error.message}`);
-        return [];
-      });
+      .then(({ data }) => data.articles || []);
   }
   return Promise.resolve([]);
 };

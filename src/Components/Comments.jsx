@@ -5,8 +5,10 @@ import {
   deleteCommentByID,
 } from "../api";
 import "../App.css";
+import ErrorPage from "./ErrorPage";
+import { useParams } from "react-router-dom";
 
-const Comments = ({ article_id }) => {
+const Comments = () => {
   const [commentsList, setCommentsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [newComment, setNewComment] = useState("");
@@ -14,18 +16,30 @@ const Comments = ({ article_id }) => {
   const [isCommentDeleted, setIsCommentDeleted] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const [offlineDeletedComments, setOfflineDeletedComments] = useState([]);
+  const { article_id } = useParams();
   const username = "grumpy19";
+  const [error, setError] = useState("");
+  console.log(newComment);
 
   useEffect(() => {
-    getCommentByArticleById(article_id).then((comments) => {
-      if (!comments) {
-        setIsLoading(true);
-      } else {
-        setCommentsList(comments);
-        setIsLoading(false);
-      }
-    });
+    if (article_id) {
+      getCommentByArticleById(article_id).then((comments) => {
+        if (!comments) {
+          setIsLoading(true);
+        } else {
+          setCommentsList(comments);
+          setIsLoading(false);
+        }
+      });
+    } else {
+      setError("article doesnt exists");
+    }
   }, [article_id]);
+
+  if (error) {
+    console.log(error);
+    return <ErrorPage message={error} />;
+  }
 
   const handleOnChange = (e) => {
     setNewComment(e.target.value);
@@ -79,6 +93,7 @@ const Comments = ({ article_id }) => {
           placeholder="add your comment"
           rows="4"
           cols="50"
+          required
         />
 
         <button type="submit">send your comment</button>

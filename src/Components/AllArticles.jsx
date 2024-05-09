@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getArticles, getArticleByTopic } from "../api";
 import "../App.css";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import ErrorPage from "./ErrorPage";
 
 const AllArticles = () => {
   const [articles, setArticles] = useState([]);
@@ -9,6 +10,7 @@ const AllArticles = () => {
   const { topic } = useParams();
   const [sortBy, setSortBy] = useState("");
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (topic) {
@@ -18,6 +20,7 @@ const AllArticles = () => {
           setIsLoading(false);
         })
         .catch((err) => {
+          setError(err.response.data.message);
           setIsLoading(false);
         });
     } else {
@@ -27,6 +30,7 @@ const AllArticles = () => {
           setIsLoading(false);
         })
         .catch((err) => {
+          setError({ err });
           setIsLoading(false);
         });
     }
@@ -62,6 +66,10 @@ const AllArticles = () => {
   };
 
   if (isLoading) return <p>Loading...</p>;
+
+  if (error) {
+    return <ErrorPage message={error} />;
+  }
 
   return (
     <>
