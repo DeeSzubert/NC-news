@@ -1,21 +1,32 @@
 import { useEffect, useState } from "react";
 import { getArticleById } from "../api";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Comments from "./Comments";
 import "../App.css";
 import Votes from "./Votes";
+import ErrorPage from "./ErrorPage";
 
 const Article = () => {
   const [article, setArticle] = useState({});
   const [votes, setVotes] = useState(0);
   const { article_id } = useParams();
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getArticleById(article_id).then((articleObject) => {
-      setArticle(articleObject);
-      setVotes(articleObject.votes);
-    });
+    getArticleById(article_id)
+      .then((articleObject) => {
+        setArticle(articleObject);
+        setVotes(articleObject.votes);
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   }, [article_id]);
+
+  if (error) {
+    return <ErrorPage message={error} />;
+  }
 
   return (
     <div>
