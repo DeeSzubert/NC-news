@@ -29,7 +29,7 @@ const Article = () => {
   }
 
   return (
-    <div>
+    <div className="each-article">
       <img src={article.article_img_url} className="article-image" />
 
       <div>

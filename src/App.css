@@ -8,8 +8,11 @@
   margin: 0;
 }
 
+body {
+  width: 100%;
+}
+
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2em;
   text-align: center;
@@ -21,6 +24,11 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.logo {
+  width: 20%;
+  height: auto;
 }
 
 ul {
@@ -114,14 +122,32 @@ ul {
   padding: 8px 16px;
 }
 
+.comments-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.comments-form-wrapper > textarea {
+  margin: 0 10px 0 10px;
+}
+
 .article-image {
-  width: 100%;
-  height: auto;
+  text-align: center;
+  width: 60vw;
+  margin: 10px auto 20px auto;
 }
 
 .comments-wrapper > h3 {
   margin: 0;
   margin-top: 10px;
+}
+
+.each-article {
+  width: 90%;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .comments-list-wrapper {
@@ -160,4 +186,38 @@ ul {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+}
+
+.nc-news {
+  text-align: left;
+  font-size: 4em;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 30px 0 30px;
+  background-color: #f883aa;
+  color: white;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.nc-logo {
+  width: 30%;
+  margin-left: 0;
+}
+
+.search-bar-elements-group > label {
+  padding-right: 10px;
 }

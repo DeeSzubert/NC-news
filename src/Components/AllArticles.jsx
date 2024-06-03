@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getArticles, getArticleByTopic } from "../api";
 import "../App.css";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
+import { UserContext } from "../contexts/User";
 
 const AllArticles = () => {
   const [articles, setArticles] = useState([]);
@@ -11,6 +12,16 @@ const AllArticles = () => {
   const [sortBy, setSortBy] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+
+  const {
+    users,
+    setUsers,
+    username,
+    setUsername,
+    loginStatus,
+    setLoginStatus,
+  } = useContext(UserContext);
+  console.log(username);
 
   useEffect(() => {
     if (topic) {
@@ -73,36 +84,38 @@ const AllArticles = () => {
 
   return (
     <>
-      <div>
-        <label htmlFor="topics">Choose a topic</label>
-        <select
-          name="topics"
-          id="topics"
-          onChange={handleTopicChange}
-          value={topic || ""}
-        >
-          <option value="">All articles</option>
-          <option value="coding">coding</option>
-          <option value="football">football</option>
-          <option value="cooking">cooking</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="topics">sort articles</label>
-        <select
-          name="topics"
-          id="topics"
-          onChange={handleSortChange}
-          value={sortBy || ""}
-        >
-          <option value="">Sort</option>
-          <option value="byDate">by date</option>
-          <option value="commentCount">by comment count</option>
-          <option value="votes">by votes</option>
-          <option value="ASC">ascending</option>
-          <option value="DESC">descending</option>
-        </select>
-      </div>
+      <section className="search-bar">
+        <div className="search-bar-elements-group">
+          <label htmlFor="topics">Choose a topic</label>
+          <select
+            name="topics"
+            id="topics"
+            onChange={handleTopicChange}
+            value={topic || ""}
+          >
+            <option value="">All articles</option>
+            <option value="coding">coding</option>
+            <option value="football">football</option>
+            <option value="cooking">cooking</option>
+          </select>
+        </div>
+        <div className="search-bar-elements-group">
+          <label htmlFor="topics">sort articles</label>
+          <select
+            name="topics"
+            id="topics"
+            onChange={handleSortChange}
+            value={sortBy || ""}
+          >
+            <option value="">Sort</option>
+            <option value="byDate">by date</option>
+            <option value="commentCount">by comment count</option>
+            <option value="votes">by votes</option>
+            <option value="ASC">ascending</option>
+            <option value="DESC">descending</option>
+          </select>
+        </div>
+      </section>
       <div>
         <ul className="list-article-wrapper">
           {articles.map((article) => (

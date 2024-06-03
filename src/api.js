@@ -60,10 +60,10 @@ const patchVotesById = (article_id, inc_votes) => {
   }
 };
 
-const postComment = (article_id, body) => {
+const postComment = (article_id, body, username) => {
   const comment = {
     body: body,
-    username: "grumpy19",
+    username: username,
   };
   if (article_id) {
     return axios
@@ -105,6 +105,17 @@ const getArticleByTopic = (topic) => {
   return Promise.resolve([]);
 };
 
+const getAllUsers = () => {
+  return axios
+    .get(`https://nc-news-project-lymg.onrender.com/users`)
+    .then(({ data }) => {
+      return data.users;
+    })
+    .catch((error) => {
+      return error.message;
+    });
+};
+
 export {
   getArticles,
   getArticleById,
@@ -113,4 +124,5 @@ export {
   postComment,
   deleteCommentByID,
   getArticleByTopic,
+  getAllUsers,
 };

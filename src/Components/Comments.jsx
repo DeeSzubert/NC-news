@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   getCommentByArticleById,
   postComment,
@@ -6,7 +6,9 @@ import {
 } from "../api";
 import "../App.css";
 import ErrorPage from "./ErrorPage";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+import { UserContext } from "../contexts/User";
 
 const Comments = () => {
   const [commentsList, setCommentsList] = useState([]);
@@ -17,9 +19,18 @@ const Comments = () => {
   const [deleteError, setDeleteError] = useState("");
   const [offlineDeletedComments, setOfflineDeletedComments] = useState([]);
   const { article_id } = useParams();
-  const username = "grumpy19";
+
   const [error, setError] = useState("");
   console.log(newComment);
+
+  const {
+    users,
+    setUsers,
+    username,
+    setUsername,
+    loginStatus,
+    setLoginStatus,
+  } = useContext(UserContext);
 
   useEffect(() => {
     if (article_id) {
@@ -49,7 +60,7 @@ const Comments = () => {
     e.preventDefault();
     setIsPosting(true);
 
-    postComment(article_id, newComment)
+    postComment(article_id, newComment, username)
       .then((postedComment) => {
         if (postedComment) {
           setCommentsList((prevComments) => {
@@ -83,7 +94,7 @@ const Comments = () => {
 
   return (
     <div className="comments-wrapper">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="comments-form-wrapper">
         <label htmlFor="add-comment">Add Comment</label>
         <textarea
           onChange={handleOnChange}
@@ -98,7 +109,13 @@ const Comments = () => {
 
         <button type="submit">send your comment</button>
       </form>
+      {!loginStatus ? (
+        <p>you need to be {<Link to={"/"}>logged</Link>} in to comment </p>
+      ) : (
+        ""
+      )}
       <p>{isPosting ? `Comment is posting...be patient` : ""}</p>
+
       <p>{isCommentDeleted ? `Comment Was deleted` : ""}</p>
       <h3>
         {commentsList.length === 0
