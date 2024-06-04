@@ -9,8 +9,6 @@ import Votes from "./Components/Votes";
 import ErrorPage from "./Components/ErrorPage";
 import { UserProvider } from "./contexts/User";
 
-import "./App.css";
-
 function App() {
   return (
     <UserProvider>

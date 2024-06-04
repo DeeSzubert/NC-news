@@ -33,7 +33,6 @@ const getCommentByArticleById = (article_id) => {
         `https://nc-news-project-lymg.onrender.com/articles/${article_id}/comments`
       )
       .then(({ data }) => {
-        console.log(data);
         return data.comments;
       })
       .catch((error) => {
@@ -43,7 +42,6 @@ const getCommentByArticleById = (article_id) => {
 };
 
 const patchVotesById = (article_id, inc_votes) => {
-  console.log(inc_votes);
   if (article_id) {
     return axios
       .patch(
