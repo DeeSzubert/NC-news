@@ -1,9 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import AllArticles from "./AllArticles";
 import { UserContext } from "../contexts/User";
 import { getAllUsers } from "../api";
 
 const Header = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     users,
     setUsers,
@@ -16,7 +17,7 @@ const Header = () => {
   useEffect(() => {
     getAllUsers().then((usersFromApi) => {
       setUsers(usersFromApi);
-      console.log(usersFromApi);
+      setIsLoading(false);
     });
   }, [setUsers]);
   const handleOnSubmit = (e) => {
@@ -41,12 +42,19 @@ const Header = () => {
           alt="NC news logo"
           className="nc-logo"
         />
-        {loginStatus ? <p>{`you are logged as ${username}`}</p> : ""}
+        {isLoading ? <p>Bear with us, loading data from the database</p> : ""}
+        {loginStatus ? (
+          <p>{`you are logged as ${username}`}</p>
+        ) : (
+          <p>
+            please login with test username : <b>jessjelly</b>
+          </p>
+        )}
       </div>
       <section className="top-header">
         {!loginStatus ? (
           <form onSubmit={handleOnSubmit}>
-            <label htmlFor="">test username : jessjelly </label>
+            <label htmlFor=""></label>
             <input
               type="text"
               placeholder="username"
