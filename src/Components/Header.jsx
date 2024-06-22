@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import AllArticles from "./AllArticles";
 import { UserContext } from "../contexts/User";
 import { getAllUsers } from "../api";
+import "../App.css";
 
 const Header = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,12 +38,18 @@ const Header = () => {
     <>
       <div className="top-nc-logo">
         <img
-          src="https://i.ibb.co/7VhTGj8/NCnews-logo.png"
+          src="src/assets/nsnews-logo.png"
           border="0"
           alt="NC news logo"
           className="nc-logo"
         />
-        {isLoading ? <p>Bear with us, loading data from the database</p> : ""}
+        {isLoading ? (
+          <p className="warning">
+            Bear with us, loading data from the database
+          </p>
+        ) : (
+          ""
+        )}
         {loginStatus ? (
           <p>{`you are logged as ${username}`}</p>
         ) : (
