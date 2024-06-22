@@ -38,7 +38,7 @@ const Header = () => {
     <>
       <div className="top-nc-logo">
         <img
-          src="src/assets/nsnews-logo.png"
+          src="/assets/nsnews-logo.png"
           border="0"
           alt="NC news logo"
           className="nc-logo"
